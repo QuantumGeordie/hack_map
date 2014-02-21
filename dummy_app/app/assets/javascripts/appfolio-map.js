@@ -67,8 +67,8 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById("map-canvas"),
     mapOptions);
 
-  var DURATION = 10
-    , INTERVAL = 1
+  var DURATION = 100
+    , INTERVAL = 10
     , MAGNITUDE_SCALE = 20000
     , START_RADIUS_RATIO = 0.8
     , START_OPACITY = 0.35
@@ -106,6 +106,7 @@ function initialize() {
 
   function animateCircle(circle, magnitude, duration, interval, delay) {
     window.setTimeout(function() {
+      duration = Math.floor(duration/interval);
       var startSize = magnitude*START_RADIUS_RATIO*MAGNITUDE_SCALE
         , endSize = magnitude*MAGNITUDE_SCALE
         , growthCycle = duration/FADE_TIME_RATIO
@@ -137,6 +138,7 @@ function initialize() {
 
   function batchAnimateCircles(circles, magnitudes, duration, interval, delay) {
     window.setTimeout(function() {
+      duration = Math.floor(duration/interval);
       var startSizes = []
         , endSizes = []
         , growthCycle = duration/FADE_TIME_RATIO
