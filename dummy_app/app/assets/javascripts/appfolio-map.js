@@ -66,21 +66,36 @@ function initialize() {
 
   var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-  var DURATION = 1000 * 300
-    , INTERVAL = 100
-    , MAGNITUDE_SCALE = 20000 * 4
-    , START_RADIUS_RATIO = 0.3
-    , START_OPACITY = 0.35
+  var START_OPACITY = 0.35
     , END_OPACITY = 0
-    , FADE_TIME_RATIO = 4
     , BATCH_MILLISECONDS = 0
     , NO_DATA_TIMEOUT = 5000
-    , DATA_URL = '/epayments';
+    , DATA_URL = '/balls';
 
   var last_count = 0
     , data = new Array(2)
     , rotation = 0
     , data_ready = false;
+
+  var dataConfigs =
+  {
+    request: {
+      duration: 1000,
+      interval: 100,
+      color: '#0000FF',
+      magnitude_scale: 20000,
+      start_radius_ratio: 0.8,
+      fade_time_ratio: 4
+    },
+    epayment: {
+      duration: 3000,
+      interval: 100,
+      color: '#FF0000',
+      magnitude_scale: 80000,
+      start_radius_ratio: 0.3,
+      fade_time_ratio: 4
+    }
+  }
 
   function convert_event_to_circle_options(event) {
     return {
@@ -107,14 +122,18 @@ function initialize() {
     }
   }
 
-  function animateCircle(circle, magnitude, duration, interval, delay) {
+  function animateCircle(options, delay) {
     window.setTimeout(function() {
-      duration = Math.floor(duration/interval);
-      var startSize = magnitude*START_RADIUS_RATIO*MAGNITUDE_SCALE
-        , endSize = magnitude*MAGNITUDE_SCALE
-        , growthCycle = duration/FADE_TIME_RATIO
-        , deltaRadius = (endSize-startSize)/growthCycle
-        , deltaOpacity = (END_OPACITY-START_OPACITY)/(duration-growthCycle)
+      var config = dataConfigs[options.type]
+      options.fillColor = config.color;
+      options.strokeColor = config.color;
+      var duration = Math.floor(config.duration/config.interval)
+        , circle = new google.maps.Circle(options)
+        , endSize = options.magnitude * config.magnitude_scale
+        , startSize = endSize * config.start_radius_ratio
+        , growthCycle = duration / config.fade_time_ratio
+        , deltaRadius = (endSize-startSize) / growthCycle
+        , deltaOpacity = (END_OPACITY-START_OPACITY) / (duration-growthCycle)
         , count = 0;
 
       circle.setRadius(startSize);
@@ -133,7 +152,7 @@ function initialize() {
           }
         }
         count++;
-      }, interval);
+      }, config.interval);
       if(--last_count === 0) continue_if_ready();
     }, delay);
   };
@@ -225,7 +244,7 @@ function initialize() {
 //      circles.length = 0;
 //      magnitudes.length = 0;
       console.log("DELAY: " + (options.time - start_time));
-      animateCircle(new google.maps.Circle(options), options.magnitude, DURATION, INTERVAL, (options.time-start_time));
+      animateCircle(options, (options.time-start_time));
     }
   }
 
