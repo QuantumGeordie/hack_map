@@ -5,8 +5,98 @@ class MapController < ApplicationController
   def get_data
     respond_to do |format|
       format.json do
-        render :json => '[{"lat":45.5234,"lng":-122.6762,"time":1392984740,"magnitude":0.5,"type":"request"},{"lat":45.5234,"lng":-122.6762,"time":1392984749,"magnitude":0.5,"type":"request"},{"lat":28.1203,"lng":-82.3529,"time":1392984720,"magnitude":0.5,"type":"request"},{"lat":28.1203,"lng":-82.3529,"time":1392984721,"magnitude":0.5,"type":"request"},{"lat":28.1203,"lng":-82.3529,"time":1392984727,"magnitude":0.5,"type":"request"},{"lat":28.1203,"lng":-82.3529,"time":1392984729,"magnitude":0.5,"type":"request"},{"lat":28.1203,"lng":-82.3529,"time":1392984731,"magnitude":0.5,"type":"request"},{"lat":28.1203,"lng":-82.3529,"time":1392984730,"magnitude":0.5,"type":"request"},{"lat":28.1203,"lng":-82.3529,"time":1392984731,"magnitude":0.5,"type":"request"},{"lat":33.749,"lng":-84.388,"time":1392984740,"magnitude":0.5,"type":"request"},{"lat":33.749,"lng":-84.388,"time":1392984741,"magnitude":0.5,"type":"request"},{"lat":33.749,"lng":-84.388,"time":1392984758,"magnitude":0.5,"type":"request"},{"lat":33.749,"lng":-84.388,"time":1392984778,"magnitude":0.5,"type":"request"},{"lat":33.749,"lng":-84.388,"time":1392984779,"magnitude":0.5,"type":"request"},{"lat":33.749,"lng":-84.388,"time":1392984791,"magnitude":0.5,"type":"request"},{"lat":33.749,"lng":-84.388,"time":1392984990,"magnitude":0.5,"type":"request"},{"lat":33.749,"lng":-84.388,"time":1392984991,"magnitude":0.5,"type":"request"},{"lat":28.1203,"lng":-82.3529,"time":1392984743,"magnitude":0.5,"type":"request"},{"lat":28.1203,"lng":-82.3529,"time":1392984743,"magnitude":0.5,"type":"request"},{"lat":28.1203,"lng":-82.3529,"time":1392984743,"magnitude":0.5,"type":"request"},{"lat":34.0814,"lng":-81.1498,"time":1392984766,"magnitude":0.5,"type":"request"},{"lat":34.0814,"lng":-81.1498,"time":1392984775,"magnitude":0.5,"type":"request"},{"lat":34.0814,"lng":-81.1498,"time":1392984776,"magnitude":0.5,"type":"request"},{"lat":34.0814,"lng":-81.1498,"time":1392984822,"magnitude":0.5,"type":"request"},{"lat":34.0814,"lng":-81.1498,"time":1392984824,"magnitude":0.5,"type":"request"},{"lat":34.0814,"lng":-81.1498,"time":1392984825,"magnitude":0.5,"type":"request"},{"lat":34.0814,"lng":-81.1498,"time":1392984839,"magnitude":0.5,"type":"request"},{"lat":34.0814,"lng":-81.1498,"time":1392984968,"magnitude":0.5,"type":"request"},{"lat":39.993,"lng":-82.9985,"time":1392984768,"magnitude":0.5,"type":"request"},{"lat":39.993,"lng":-82.9985,"time":1392984785,"magnitude":0.5,"type":"request"},{"lat":39.993,"lng":-82.9985,"time":1392984788,"magnitude":0.5,"type":"request"},{"lat":39.993,"lng":-82.9985,"time":1392984807,"magnitude":0.5,"type":"request"},{"lat":39.993,"lng":-82.9985,"time":1392984817,"magnitude":0.5,"type":"request"},{"lat":35.4002,"lng":-97.4182,"time":1392984780,"magnitude":0.5,"type":"request"},{"lat":35.4002,"lng":-97.4182,"time":1392984781,"magnitude":0.5,"type":"request"},{"lat":35.4002,"lng":-97.4182,"time":1392984782,"magnitude":0.5,"type":"request"},{"lat":40.4763,"lng":-86.9571,"time":1392984797,"magnitude":0.5,"type":"request"},{"lat":40.4763,"lng":-86.9571,"time":1392984804,"magnitude":0.5,"type":"request"},{"lat":25.7341,"lng":-80.3594,"time":1392984865,"magnitude":0.5,"type":"request"},{"lat":25.7341,"lng":-80.3594,"time":1392984868,"magnitude":0.5,"type":"request"},{"lat":25.7341,"lng":-80.3594,"time":1392984869,"magnitude":0.5,"type":"request"},{"lat":25.7341,"lng":-80.3594,"time":1392984873,"magnitude":0.5,"type":"request"},{"lat":25.7341,"lng":-80.3594,"time":1392984874,"magnitude":0.5,"type":"request"},{"lat":25.7341,"lng":-80.3594,"time":1392984939,"magnitude":0.5,"type":"request"},{"lat":25.7341,"lng":-80.3594,"time":1392984949,"magnitude":0.5,"type":"request"},{"lat":25.7341,"lng":-80.3594,"time":1392984950,"magnitude":0.5,"type":"request"},{"lat":25.7341,"lng":-80.3594,"time":1392984952,"magnitude":0.5,"type":"request"},{"lat":25.7341,"lng":-80.3594,"time":1392984953,"magnitude":0.5,"type":"request"},{"lat":25.7341,"lng":-80.3594,"time":1392985024,"magnitude":0.5,"type":"request"},{"lat":46.8543,"lng":-96.8284,"time":1392984880,"magnitude":0.5,"type":"request"},{"lat":37.386,"lng":-122.0838,"time":1392984897,"magnitude":0.5,"type":"request"},{"lat":40.0205,"lng":-83.0172,"time":1392984904,"magnitude":0.5,"type":"request"},{"lat":40.0205,"lng":-83.0172,"time":1392984907,"magnitude":0.5,"type":"request"},{"lat":40.0205,"lng":-83.0172,"time":1392984908,"magnitude":0.5,"type":"request"},{"lat":40.0205,"lng":-83.0172,"time":1392984909,"magnitude":0.5,"type":"request"},{"lat":40.0205,"lng":-83.0172,"time":1392984955,"magnitude":0.5,"type":"request"},{"lat":40.0205,"lng":-83.0172,"time":1392984956,"magnitude":0.5,"type":"request"},{"lat":40.0205,"lng":-83.0172,"time":1392985001,"magnitude":0.5,"type":"request"},{"lat":40.0205,"lng":-83.0172,"time":1392985002,"magnitude":0.5,"type":"request"},{"lat":40.0205,"lng":-83.0172,"time":1392985013,"magnitude":0.5,"type":"request"},{"lat":40.0205,"lng":-83.0172,"time":1392985015,"magnitude":0.5,"type":"request"},{"lat":33.9791,"lng":-84.1494,"time":1392984914,"magnitude":0.5,"type":"request"},{"lat":33.9791,"lng":-84.1494,"time":1392984916,"magnitude":0.5,"type":"request"},{"lat":33.9791,"lng":-84.1494,"time":1392984917,"magnitude":0.5,"type":"request"},{"lat":33.9791,"lng":-84.1494,"time":1392984919,"magnitude":0.5,"type":"request"},{"lat":33.9791,"lng":-84.1494,"time":1392984921,"magnitude":0.5,"type":"request"},{"lat":34.7984,"lng":-77.3592,"time":1392984970,"magnitude":0.5,"type":"request"},{"lat":46.8772,"lng":-96.7898,"time":1392984976,"magnitude":0.5,"type":"request"},{"lat":39.9289,"lng":116.3883,"time":1392985001,"magnitude":0.5,"type":"request"},{"lat":35.9899,"lng":-79.6984,"time":1392985017,"magnitude":0.5,"type":"request"},{"lat":35.9899,"lng":-79.6984,"time":1392985018,"magnitude":0.5,"type":"request"},{"lat":35.9899,"lng":-79.6984,"time":1392985019,"magnitude":0.5,"type":"request"},{"lat":35.9899,"lng":-79.6984,"time":1392985022,"magnitude":0.5,"type":"request"},{"lat":35.9899,"lng":-79.6984,"time":1392985028,"magnitude":0.5,"type":"request"},{"lat":35.9899,"lng":-79.6984,"time":1392985029,"magnitude":0.5,"type":"request"},{"lat":35.9899,"lng":-79.6984,"time":1392985033,"magnitude":0.5,"type":"request"},{"lat":35.9899,"lng":-79.6984,"time":1392985034,"magnitude":0.5,"type":"request"},{"lat":35.9899,"lng":-79.6984,"time":1392985035,"magnitude":0.5,"type":"request"}]'
+        render :json => get_latest
       end
     end
+  end
+
+  private
+
+  def get_latest
+    localTime = Time.new
+    utcTime = localTime.getutc
+    curDate = Time.new.gmtime.strftime("%Y.%m.%d")
+
+    json_hash = []
+
+    servers = ["prod1", "prod2", "prod3"]
+    #servers = ["prod2"]
+    servers.each do |server|
+      logFile = "#{server}.log"
+      difFile = "#{server}_diff.log"
+      posFile = "#{server}_pos.log"
+
+      out = `rsync ehawkins@log1.core.densd.appfolio.net:/var/log/HOSTS/densd/#{server}/#{curDate}/appfolio #{logFile}`
+
+      f1 = File.open(logFile)
+      f2 = File.open(difFile, "w")
+      f3 = File.new(posFile, File::CREAT|File::RDWR)
+      if f3.size == 0
+        pos = 0
+      else
+        pos = f3.read.to_i
+      end
+
+      f1.pos = pos
+      f1.each do |line|
+        f2.write(line)
+      end
+      f3.rewind
+      f3.write(f1.pos)
+
+      reqstr = `grep nginx #{difFile} | grep -v localhost`
+      requests = reqstr.split(/\n/)
+
+      ip_list = {}
+
+      requests.each do |line|
+        splitline = line.split(/\s/)
+
+        timestamp         = splitline[0]
+        ip_address        = /[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/.match(line).to_s
+
+        date    = /[0-9]{4}\-[0-9]{2}\-[0-9]{2}/.match(timestamp).to_s
+        year    = date[0..3]
+        month   = date[5..6]
+        day     = date[8..9]
+        time    = /[0-9]{2}\:[0-9]{2}\:[0-9]{2}\.[0-9]{3}/.match(timestamp).to_s
+        hour    = time[0..1]
+        minute  = time[3..4]
+        second  = time[6..7].to_f + time[9..11].to_f/1000
+
+        ms_since_epoch = Time.new(year, month, day, hour, minute, second).to_i
+
+        ip_list[ip_address] = [] if ip_list[ip_address].nil?
+        ip_list[ip_address] << ms_since_epoch unless ip_list[ip_address].include?(ms_since_epoch)
+      end
+
+      count = 0
+
+      ip_list.each do |ip, timestamps|
+        uri = URI.parse("http://freegeoip.net/json/#{ip}")
+        http = Net::HTTP.new(uri.host, uri.port)
+        request = Net::HTTP::Get.new(uri.request_uri)
+        response = http.request(request)
+        geo_info = response.body
+
+        if response.code == "200"
+          geo_info_hash = JSON.parse(geo_info)
+          lat = geo_info_hash["latitude"]
+          long = geo_info_hash["longitude"]
+
+          timestamps.each do |ts|
+            json_hash[count] = {"lat" => lat, "lng" => long, "time" => ts, "magnitude" => 0.5, "type" => "request"}
+            puts json_hash[count]
+            count += 1
+          end
+        end
+      end
+
+
+    end
+
+    json_hash.sort_by { |hsh| hsh["time"]}
+    json_out = JSON.generate(json_hash)
+    json_out
   end
 end
