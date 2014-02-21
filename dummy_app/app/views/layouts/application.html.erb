@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DummyApp</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFYpe1EHGm2joEqeTl5vMRG6Lp0E1Njx0&sensor=false"></script>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+
+  <style type="text/css">
+    html { height: 100% }
+    body { height: 100%; margin: 0; padding: 0 }
+    #map-canvas { height: 100%; width: 100% }
+  </style>
+
+
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>
