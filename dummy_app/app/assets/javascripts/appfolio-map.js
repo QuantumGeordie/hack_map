@@ -67,13 +67,17 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById("map-canvas"),
     mapOptions);
 
-  var DURATION = 100
+  var DURATION = 10
     , INTERVAL = 1
-    , MAGNITUDE_SCALE = 100000
+    , MAGNITUDE_SCALE = 20000
     , START_RADIUS_RATIO = 0.8
     , START_OPACITY = 0.35
     , END_OPACITY = 0
     , FADE_TIME_RATIO = 4;
+
+  var last_count = 0
+    , data = new Array(2)
+    , rotation = 0;
 
   function convert_event_to_circle_options(event) {
     return {
@@ -117,7 +121,10 @@ function initialize() {
           if(count === duration) {
             window.clearInterval(intervalHandle);
             circle.setMap(null);
-            // delete me!
+            last_count--;
+            if(last_count === 0) {
+              yo_momma(data[1-rotation]);
+            }
           }
         }
         count++;
@@ -126,9 +133,20 @@ function initialize() {
   };
 
   function yo_momma(input) {
+    $.ajax({
+      url: "/balls"
+    }).done(function(response) {
+      data[rotation] = response;
+      rotation = 1-rotation;
+    });
+
+    console.log(input);
+
     var len = input.length
       , circleOptions = []
       , start_time = input[0].time;
+
+    last_count = len;
 
     for(var i = 0; i < len; i++) {
       circleOptions.push(convert_event_to_circle_options(input[i]));
@@ -143,9 +161,10 @@ function initialize() {
 
   $.ajax({
     url: "/balls"
-  }).done(function(data) {
-    yo_momma(data);
+  }).done(function(response) {
+    yo_momma(response);
   });
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
