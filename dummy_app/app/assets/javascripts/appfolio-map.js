@@ -73,7 +73,9 @@ function initialize() {
     , START_OPACITY = 0.35
     , END_OPACITY = 0
     , FADE_TIME_RATIO = 4
-    , BATCH_MILLISECONDS = 0;
+    , BATCH_MILLISECONDS = 0
+    , NO_DATA_TIMEOUT = 5000
+    , DATA_URL = '/balls';
 
   var last_count = 0
     , data = new Array(2)
@@ -181,19 +183,17 @@ function initialize() {
 
   function yo_momma(input) {
     $.ajax({
-      url: "/balls"
+      url: DATA_URL
     }).done(function(response) {
       data[rotation] = response;
       rotation = 1-rotation;
       continue_if_ready();
     });
 
-    console.log(input);
-
     if(input.length === 0) {
       setTimeout(function() {
         continue_if_ready();
-      }, 1000);
+      }, NO_DATA_TIMEOUT);
       return;
     }
 
@@ -227,7 +227,7 @@ function initialize() {
   }
 
   $.ajax({
-    url: "/balls"
+    url: DATA_URL
   }).done(function(response) {
     yo_momma(response);
   });
