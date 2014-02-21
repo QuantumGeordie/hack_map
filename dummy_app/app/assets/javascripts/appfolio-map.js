@@ -75,7 +75,7 @@ function initialize() {
     , FADE_TIME_RATIO = 4
     , BATCH_MILLISECONDS = 0
     , NO_DATA_TIMEOUT = 5000
-    , DATA_URL = '/epayments';
+    , DATA_URL = '/data';
 
   var last_count = 0
     , data = new Array(2)

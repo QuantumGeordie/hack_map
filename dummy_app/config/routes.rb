@@ -49,8 +49,7 @@ DummyApp::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'map#index'
-  get '/balls', to: 'map#get_data'
-  get '/epayments', to: 'map#get_epayments_data'
+  get '/data', to: 'map#get_data'
 
   # See how all your routes lay out with "rake routes"
 

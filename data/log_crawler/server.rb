@@ -26,18 +26,11 @@ writer_thread = Thread.new do
     line = socket.readline
     $stdout.puts "received request: #{line}"
 
-    data = nil
+    content = nil
     mutex.synchronize do
-      data = pending_data
+      content = JSON.generate(pending_data)
       pending_data = []
     end
-
-    puts "responding with #{data.count} JSON objects"
-    puts
-
-    content = '['
-    content << data.join(",\n")
-    content << ']'
 
     response = "HTTP/1.0 200 OK\n"
     response << "Content-Type: application/json\n"
