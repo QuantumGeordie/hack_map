@@ -66,8 +66,8 @@ function initialize() {
 
   var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-  var DURATION = 100
-    , INTERVAL = 10
+  var DURATION = 2000
+    , INTERVAL = 100
     , MAGNITUDE_SCALE = 20000
     , START_RADIUS_RATIO = 0.8
     , START_OPACITY = 0.35
