@@ -5,12 +5,12 @@ class EventObject
 
   attr_reader :time, :longitude, :latitude, :magnitude, :type
 
-  def initialize(time, longitude, latitude)
+  def initialize(time, longitude, latitude, type)
     @time = time.strip
     @longitude = longitude.strip
     @latitude = latitude.strip
     @magnitude = 1.0
-    @type = 'epayment'
+    @type = type
   end
 
   def to_s
@@ -26,11 +26,12 @@ eos
   end
 end
 
-if ARGV.length != 1
-  $stderr.puts("Usage: #{$0} <port>")
+if ARGV.length != 2
+  $stderr.puts("Usage: #{$0} <port> <event-type>")
 end
 
 port = ARGV[0].to_i
+event_type = ARGV[1].to_i
 mutex = Mutex.new
 server = TCPServer.new('localhost', port)
 pending_data = []
@@ -39,7 +40,7 @@ reader_thread = Thread.new do
   $stdin.each_line do |line|
     mutex.synchronize do
       fields = line.split(',')
-      pending_data << EventObject.new(fields[0], fields[1], fields[2])
+      pending_data << EventObject.new(fields[0], fields[1], fields[2], event_type)
     end
   end
 end
