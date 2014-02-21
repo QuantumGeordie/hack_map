@@ -64,8 +64,7 @@ function initialize() {
     styles: styles
   };
 
-  var map = new google.maps.Map(document.getElementById("map-canvas"),
-    mapOptions);
+  var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
   var DURATION = 2000
     , INTERVAL = 100
@@ -73,12 +72,13 @@ function initialize() {
     , START_RADIUS_RATIO = 0.8
     , START_OPACITY = 0.35
     , END_OPACITY = 0
-    , FADE_TIME_RATIO = 4;
+    , FADE_TIME_RATIO = 4
+    , BATCH_MILLISECONDS = 0;
 
   var last_count = 0
     , data = new Array(2)
     , rotation = 0
-    , data_ready_count = 0;
+    , data_ready = false;
 
   function convert_event_to_circle_options(event) {
     return {
@@ -97,10 +97,11 @@ function initialize() {
   }
 
   function continue_if_ready() {
-    data_ready_count++;
-    if(data_ready_count === 2) {
-      data_ready_count = 0;
+    if(data_ready) {
+      data_ready = false;
       yo_momma(data[1-rotation]);
+    } else {
+      data_ready = true;
     }
   }
 
@@ -127,8 +128,7 @@ function initialize() {
           if(count === duration) {
             window.clearInterval(intervalHandle);
             circle.setMap(null);
-            last_count--;
-            if(last_count === 0) continue_if_ready();
+            if(--last_count === 0) continue_if_ready();
           }
         }
         count++;
@@ -185,32 +185,35 @@ function initialize() {
     }).done(function(response) {
       data[rotation] = response;
       rotation = 1-rotation;
-      continue_if_ready()
+      continue_if_ready();
     });
 
     var len = input.length
       , circleOptions = []
-      , start_time = input[0].time;
+      , start_time = input[0].time
+      , circles = []
+      , magnitudes = []
+      , currentTime, options, i;
 
     last_count = len;
 
-    for(var i = 0; i < len; i++) {
+    if(len === 0) {
+      setTimeout(function() {
+        continue_if_ready();
+      }, 5000);
+    }
+
+    for(i = 0; i < len; i++) {
       circleOptions.push(convert_event_to_circle_options(input[i]));
     }
 
-    var circles = []
-      , magnitudes = []
-      , currentTime
-      , options;
-
-    for(var i = 0; i < len; i++) {
+    for(i = 0; i < len; i++) {
       options = circleOptions[i];
       currentTime = options.time;
-      while(currentTime === options.time) {
+      while(currentTime <= (options.time + BATCH_MILLISECONDS)) {
         circles.push(new google.maps.Circle(options));
         magnitudes.push(options.magnitude);
-        i++;
-        if(i === len) break;
+        if(++i === len) break;
         options = circleOptions[i];
       }
       i--;
@@ -225,7 +228,6 @@ function initialize() {
   }).done(function(response) {
     yo_momma(response);
   });
-
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
