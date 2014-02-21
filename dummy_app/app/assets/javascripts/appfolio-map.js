@@ -77,7 +77,8 @@ function initialize() {
 
   var last_count = 0
     , data = new Array(2)
-    , rotation = 0;
+    , rotation = 0
+    , data_ready_count = 0;
 
   function convert_event_to_circle_options(event) {
     return {
@@ -93,6 +94,14 @@ function initialize() {
       magnitude: event.magnitude,
       type: event.type
     };
+  }
+
+  function continue_if_ready() {
+    data_ready_count++;
+    if(data_ready_count === 2) {
+      data_ready_count = 0;
+      yo_momma(data[1-rotation]);
+    }
   }
 
   function animateCircle(circle, magnitude, duration, interval, delay) {
@@ -122,9 +131,7 @@ function initialize() {
             window.clearInterval(intervalHandle);
             circle.setMap(null);
             last_count--;
-            if(last_count === 0) {
-              yo_momma(data[1-rotation]);
-            }
+            if(last_count === 0) continue_if_ready();
           }
         }
         count++;
@@ -138,9 +145,8 @@ function initialize() {
     }).done(function(response) {
       data[rotation] = response;
       rotation = 1-rotation;
+      continue_if_ready()
     });
-
-    console.log(input);
 
     var len = input.length
       , circleOptions = []
