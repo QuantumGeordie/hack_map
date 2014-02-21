@@ -156,7 +156,7 @@ function initialize() {
 
       var intervalHandle = window.setInterval(function() {
         if(count < growthCycle) {
-          for(i = 0; i < len; i++) circles[i].setRadius(circles[i].radius + deltaRadius);
+          for(i = 0; i < len; i++) circles[i].setRadius(circles[i].radius + deltaRadii[i]);
         } else {
           for(i = 0; i < len; i++) {
             circle = circles[i];
@@ -208,11 +208,13 @@ function initialize() {
         circles.push(new google.maps.Circle(options));
         magnitudes.push(options.magnitude);
         i++;
+        if(i === len) break;
+        options = circleOptions[i];
       }
       i--;
-      batchAnimateCircles(circles, magnitudes, DURATION, INTERVAL, (options.time-start_time));
-      circles = [];
-      magnitudes = [];
+      batchAnimateCircles(circles.slice(0), magnitudes.slice(0), DURATION, INTERVAL, (options.time-start_time));
+      circles.length = 0;
+      magnitudes.length = 0;
     }
   }
 
