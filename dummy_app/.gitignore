@@ -16,3 +16,5 @@
 
 # Ignore our cached log files from servers
 *.log
+
+db/*

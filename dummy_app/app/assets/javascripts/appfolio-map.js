@@ -66,9 +66,7 @@ function initialize() {
 
   var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-  var START_OPACITY = 0.35
-    , END_OPACITY = 0
-    , BATCH_MILLISECONDS = 0
+  var BATCH_MILLISECONDS = 0
     , NO_DATA_TIMEOUT = 5000
     , DATA_URL = '/balls';
 
@@ -85,25 +83,39 @@ function initialize() {
       color: '#0000FF',
       magnitude_scale: 20000,
       start_radius_ratio: 0.8,
-      fade_time_ratio: 4
+      fade_time_ratio: 4,
+      start_opacity: 0.35,
+      end_opacity: 0
     },
-    epayment: {
+    epayments: {
       duration: 3000,
       interval: 100,
       color: '#FF0000',
       magnitude_scale: 80000,
       start_radius_ratio: 0.3,
-      fade_time_ratio: 4
+      fade_time_ratio: 4,
+      start_opacity: 0.35,
+      end_opacity: 0
+    },
+    transactions: {
+      duration: 2000,
+      interval: 100,
+      color: '#00FF00',
+      magnitude_scale: 50000,
+      start_radius_ratio: 0.5,
+      fade_time_ratio: 4,
+      start_opacity: 0.35,
+      end_opacity: 0
     }
   }
 
   function convert_event_to_circle_options(event) {
     return {
       strokeColor: '#FF0000',
-      strokeOpacity: START_OPACITY,
+      strokeOpacity: 0.5,
       strokeWeight: 2,
       fillColor: '#FF0000',
-      fillOpacity: START_OPACITY,
+      fillOpacity: 0.5,
       map: map,
       center: new google.maps.LatLng(event.lat, event.lng),
       radius: 0,
@@ -127,13 +139,15 @@ function initialize() {
       var config = dataConfigs[options.type]
       options.fillColor = config.color;
       options.strokeColor = config.color;
+      options.fillOpacity = config.start_opacity;
+      options.strokeOpacity = config.start_opacity;
       var duration = Math.floor(config.duration/config.interval)
         , circle = new google.maps.Circle(options)
         , endSize = options.magnitude * config.magnitude_scale
         , startSize = endSize * config.start_radius_ratio
         , growthCycle = duration / config.fade_time_ratio
         , deltaRadius = (endSize-startSize) / growthCycle
-        , deltaOpacity = (END_OPACITY-START_OPACITY) / (duration-growthCycle)
+        , deltaOpacity = (config.end_opacity-config.start_opacity) / (duration-growthCycle)
         , count = 0;
 
       circle.setRadius(startSize);
