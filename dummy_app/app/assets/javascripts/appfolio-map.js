@@ -83,10 +83,10 @@ function initialize() {
   function convert_event_to_circle_options(event) {
     return {
       strokeColor: '#FF0000',
-      strokeOpacity: 0.35,
+      strokeOpacity: START_OPACITY,
       strokeWeight: 2,
       fillColor: '#FF0000',
-      fillOpacity: 0.35,
+      fillOpacity: START_OPACITY,
       map: map,
       center: new google.maps.LatLng(event.lat, event.lng),
       radius: 0,
@@ -114,10 +114,6 @@ function initialize() {
         , count = 0;
 
       circle.setRadius(startSize);
-      circle.setValues( {
-        fillOpacity: START_OPACITY,
-        strokeOpacity: START_OPACITY
-      });
 
       var intervalHandle = window.setInterval(function() {
         if(count < growthCycle) {
@@ -139,6 +135,48 @@ function initialize() {
     }, delay);
   };
 
+  function batchAnimateCircles(circles, magnitudes, duration, interval, delay) {
+    window.setTimeout(function() {
+      var startSizes = []
+        , endSizes = []
+        , growthCycle = duration/FADE_TIME_RATIO
+        , deltaRadii = []
+        , deltaOpacity = (END_OPACITY-START_OPACITY)/(duration-growthCycle)
+        , count = 0
+        , len = circles.length
+        , startScale = START_RADIUS_RATIO*MAGNITUDE_SCALE
+        , i, circle;
+
+      for(i = 0; i < len; i++) {
+        startSizes.push(magnitudes[i]*startScale);
+        endSizes.push(magnitudes[i]*MAGNITUDE_SCALE);
+        deltaRadii.push((endSizes[i]-startSizes[i])/growthCycle);
+        circles[i].setRadius(startSizes[i]);
+      }
+
+      var intervalHandle = window.setInterval(function() {
+        if(count < growthCycle) {
+          for(i = 0; i < len; i++) circles[i].setRadius(circles[i].radius + deltaRadius);
+        } else {
+          for(i = 0; i < len; i++) {
+            circle = circles[i];
+            circle.setValues({
+              fillOpacity: circle.fillOpacity + deltaOpacity,
+              strokeOpacity: circle.strokeOpacity + deltaOpacity
+            });
+          }
+          if(count === duration) {
+            window.clearInterval(intervalHandle);
+            for(i = 0; i < len; i++) circle[i].setMap(null);
+            last_count -= len;
+            if(last_count === 0) continue_if_ready();
+          }
+        }
+        count++;
+      }, interval);
+    }, delay);
+  }
+
   function yo_momma(input) {
     $.ajax({
       url: "/balls"
@@ -158,10 +196,22 @@ function initialize() {
       circleOptions.push(convert_event_to_circle_options(input[i]));
     }
 
+    var circles = []
+      , magnitudes = []
+      , currentTime;
+
     for(var i = 0; i < len; i++) {
       var options = circleOptions[i];
-      circle = new google.maps.Circle(options);
-      animateCircle(circle, options.magnitude, DURATION, INTERVAL, (options.time-start_time));
+      currentTime = options.time;
+      while(currentTime === options.time) {
+        circles.push(new google.maps.Circle(options));
+        magnitudes.push(options.magnitude);
+        i++;
+      }
+      i--;
+      batchAnimateCircles(circles, magnitudes, DURATION, INTERVAL, (options.time-start_time));
+      circles.length = 0;
+      magnitudes.length = 0;
     }
   }
 
