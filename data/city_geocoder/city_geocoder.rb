@@ -57,8 +57,11 @@ end
 
 $stdin.each_line do |line|
   fields = line.gsub(/\"/, '').split(',')
-  time = fields[1].strip
+  if fields.length < 3
+    next
+  end
 
+  time = fields[1].strip
   city = fields[2]
   state = fields[3]
   city_location = CityLocation.new(city, state)
@@ -68,7 +71,7 @@ $stdin.each_line do |line|
     $stderr.puts("missing location: #{city_location}, falling back to state location")
     geo_location = state_fallbacks[city_location.state]
   else
-    $stdout.puts "#{DateTime.parse(time).to_time.to_i},#{geo_location.longitude},#{geo_location.latitude}"
+    $stdout.puts "#{DateTime.parse(time).to_time.to_i * 1000},#{geo_location.longitude},#{geo_location.latitude}"
     $stdout.flush
   end
 end

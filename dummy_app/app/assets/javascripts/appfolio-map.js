@@ -66,16 +66,16 @@ function initialize() {
 
   var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-  var DURATION = 2000
+  var DURATION = 1000 * 300
     , INTERVAL = 100
-    , MAGNITUDE_SCALE = 20000
-    , START_RADIUS_RATIO = 0.8
+    , MAGNITUDE_SCALE = 20000 * 4
+    , START_RADIUS_RATIO = 0.3
     , START_OPACITY = 0.35
     , END_OPACITY = 0
     , FADE_TIME_RATIO = 4
     , BATCH_MILLISECONDS = 0
     , NO_DATA_TIMEOUT = 5000
-    , DATA_URL = '/balls';
+    , DATA_URL = '/epayments';
 
   var last_count = 0
     , data = new Array(2)
@@ -130,11 +130,11 @@ function initialize() {
           if(count === duration) {
             window.clearInterval(intervalHandle);
             circle.setMap(null);
-            if(--last_count === 0) continue_if_ready();
           }
         }
         count++;
       }, interval);
+      if(--last_count === 0) continue_if_ready();
     }, delay);
   };
 
@@ -213,16 +213,19 @@ function initialize() {
     for(i = 0; i < len; i++) {
       options = circleOptions[i];
       currentTime = options.time;
-      while(currentTime <= (options.time + BATCH_MILLISECONDS)) {
-        circles.push(new google.maps.Circle(options));
-        magnitudes.push(options.magnitude);
-        if(++i === len) break;
-        options = circleOptions[i];
-      }
-      i--;
-      batchAnimateCircles(circles.slice(0), magnitudes.slice(0), DURATION, INTERVAL, (options.time-start_time));
-      circles.length = 0;
-      magnitudes.length = 0;
+//      while(currentTime <= (options.time + BATCH_MILLISECONDS)) {
+//        circles.push(new google.maps.Circle(options));
+//        magnitudes.push(options.magnitude);
+//        if(++i === len) break;
+//        options = circleOptions[i];
+//      }
+//      i--;
+
+//      batchAnimateCircles(circles.slice(0), magnitudes.slice(0), DURATION, INTERVAL, (options.time-start_time));
+//      circles.length = 0;
+//      magnitudes.length = 0;
+      console.log("DELAY: " + (options.time - start_time));
+      animateCircle(new google.maps.Circle(options), options.magnitude, DURATION, INTERVAL, (options.time-start_time));
     }
   }
 
