@@ -167,7 +167,7 @@ function initialize() {
           }
           if(count === duration) {
             window.clearInterval(intervalHandle);
-            for(i = 0; i < len; i++) circle[i].setMap(null);
+            for(i = 0; i < len; i++) circles[i].setMap(null);
             last_count -= len;
             if(last_count === 0) continue_if_ready();
           }
@@ -198,10 +198,11 @@ function initialize() {
 
     var circles = []
       , magnitudes = []
-      , currentTime;
+      , currentTime
+      , options;
 
     for(var i = 0; i < len; i++) {
-      var options = circleOptions[i];
+      options = circleOptions[i];
       currentTime = options.time;
       while(currentTime === options.time) {
         circles.push(new google.maps.Circle(options));
@@ -210,8 +211,8 @@ function initialize() {
       }
       i--;
       batchAnimateCircles(circles, magnitudes, DURATION, INTERVAL, (options.time-start_time));
-      circles.length = 0;
-      magnitudes.length = 0;
+      circles = [];
+      magnitudes = [];
     }
   }
 
