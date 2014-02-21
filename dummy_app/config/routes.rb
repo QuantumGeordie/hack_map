@@ -50,6 +50,7 @@ DummyApp::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => 'map#index'
   get '/balls', to: 'map#get_data'
+  get '/epayments', to: 'map#get_epayments_data'
 
   # See how all your routes lay out with "rake routes"
 
