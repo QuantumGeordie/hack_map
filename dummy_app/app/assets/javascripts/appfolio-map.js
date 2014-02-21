@@ -188,6 +188,15 @@ function initialize() {
       continue_if_ready();
     });
 
+    console.log(input);
+
+    if(input.length === 0) {
+      setTimeout(function() {
+        continue_if_ready();
+      }, 1000);
+      return;
+    }
+
     var len = input.length
       , circleOptions = []
       , start_time = input[0].time
@@ -196,12 +205,6 @@ function initialize() {
       , currentTime, options, i;
 
     last_count = len;
-
-    if(len === 0) {
-      setTimeout(function() {
-        continue_if_ready();
-      }, 5000);
-    }
 
     for(i = 0; i < len; i++) {
       circleOptions.push(convert_event_to_circle_options(input[i]));
